@@ -2,271 +2,156 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRB | Roblox Assistant</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="أفضل مكان لتحميل ملفات Roblox لجميع المنصات - iPhone, Android, Windows">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>KRB - مركز تحميل Roblox الاحترافي</title>
+    
+    <!-- Preload الخطوط الأساسية لتحسين الأداء -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    
+    <!-- أيقونات حديثة -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<div class="background">
-    <span class="blob blob1"></span>
-    <span class="blob blob2"></span>
-    <span class="blob blob3"></span>
-</div>
-
-<nav class="navbar">
-
-    <div class="logo">
-        KRB
+    <!-- مؤثر الخلفية الأورورا -->
+    <div class="aurora-container">
+        <div class="aurora aurora-1"></div>
+        <div class="aurora aurora-2"></div>
+        <div class="aurora aurora-3"></div>
     </div>
 
-    <ul>
+    <!-- شبكة الخلفية التقنية -->
+    <div class="grid-background"></div>
 
-        <li><a href="#downloads">التحميل</a></li>
-        <li><a href="#community">المجتمع</a></li>
-        <li><a href="#footer">التواصل</a></li>
+    <!-- تأثير التوهج المتابع للماوس -->
+    <div class="mouse-glow" id="mouseGlow"></div>
 
-    </ul>
-
-</nav>
-
-<header class="hero">
-
-    <div class="hero-content">
-
-        <span class="badge">
-            🚀 Roblox Assistant
-        </span>
-
-        <h1>
-            KRB
-        </h1>
-
-        <p>
-
-            أفضل مكان لتحميل ملفات روبلوكس
-            لجميع المنصات بأحدث الإصدارات.
-
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="#downloads" class="btn primary">
-
-                تحميل الملفات
-
-            </a>
-
-            <a href="https://discord.gg/5TmtrnRgJd"
-
-               target="_blank"
-
-               class="btn secondary">
-
-                Discord
-
-            </a>
-
-        </div>
-
-    </div>
-
-</header>
-
-<section class="stats">
-
-    <div class="stat">
-
-        <h2>3</h2>
-
-        <span>منصات</span>
-
-    </div>
-
-    <div class="stat">
-
-        <h2>24/7</h2>
-
-        <span>دعم</span>
-
-    </div>
-
-    <div class="stat">
-
-        <h2>Fast</h2>
-
-        <span>تحميل سريع</span>
-
-    </div>
-
-</section>
-
-<section id="downloads" class="downloads">
-
-    <h2 class="title">
-        التحميل
-    </h2>
-
-    <div class="cards">
-
-        <div class="card">
-
-            <div class="icon">
-                📱
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- شريط التنقل العلوي -->
+        <nav class="navbar glass-panel">
+            <div class="nav-container">
+                <a href="#" class="logo-container" aria-label="KRB الرئيسية">
+                    <span class="logo-text">KRB</span>
+                    <span class="logo-dot"></span>
+                </a>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">الرئيسية</a>
+                    <a href="#" class="nav-link">المميزات</a>
+                    <a href="#" class="nav-link">المجتمع</a>
+                </div>
+                <button class="icon-button" aria-label="القائمة" id="menuToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
+        </nav>
 
-            <h3>
-                iPhone
-            </h3>
+        <!-- القسم البطولي -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="badge glass-pill">
+                    <span class="badge-dot"></span>
+                    النسخة التجريبية 2.0 متاحة الآن
+                </div>
+                
+                <h1 class="hero-title">
+                    <span class="title-line">قوة لا تُضاهى</span>
+                    <span class="title-line gradient-text">في عالم Roblox</span>
+                </h1>
+                
+                <p class="hero-description">
+                    مركز التحميل الرسمي لأدوات KRB. أداء ثوري وتجربة سلسة<br>عبر جميع منصاتك المفضلة.
+                </p>
 
-            <p>
+                <!-- بطاقات التحميل -->
+                <div class="download-grid">
+                    <!-- iPhone -->
+                    <article class="download-card glass-card" data-platform="ios">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-icon-wrapper">
+                                <i class="fa-brands fa-apple card-icon"></i>
+                            </div>
+                            <h3 class="card-title">iPhone</h3>
+                            <p class="card-subtitle">iOS 15+</p>
+                            <div class="card-divider"></div>
+                            <a href="https://ipalinks.ru/dl/mbUZolGB" target="_blank" rel="noopener noreferrer" class="download-button">
+                                <span class="button-text">تحميل</span>
+                                <i class="fa-solid fa-arrow-left button-arrow"></i>
+                            </a>
+                        </div>
+                    </article>
 
-                Roblox IPA
+                    <!-- Android -->
+                    <article class="download-card glass-card featured" data-platform="android">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-icon-wrapper">
+                                <i class="fa-brands fa-android card-icon"></i>
+                            </div>
+                            <h3 class="card-title">Android</h3>
+                            <p class="card-subtitle">APK مباشر</p>
+                            <div class="card-divider"></div>
+                            <a href="https://www.mediafire.com/file/g651xwz8mkzr70i/Delta-KRB.apk/file" target="_blank" rel="noopener noreferrer" class="download-button">
+                                <span class="button-text">تحميل</span>
+                                <i class="fa-solid fa-arrow-left button-arrow"></i>
+                            </a>
+                        </div>
+                    </article>
 
-            </p>
+                    <!-- Windows -->
+                    <article class="download-card glass-card" data-platform="windows">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-icon-wrapper">
+                                <i class="fa-brands fa-windows card-icon"></i>
+                            </div>
+                            <h3 class="card-title">Windows</h3>
+                            <p class="card-subtitle">x64</p>
+                            <div class="card-divider"></div>
+                            <a href="https://www.mediafire.com/file/ljm28f6dcwzklc6/Xeno_by_KRB.zip/file" target="_blank" rel="noopener noreferrer" class="download-button">
+                                <span class="button-text">تحميل</span>
+                                <i class="fa-solid fa-arrow-left button-arrow"></i>
+                            </a>
+                        </div>
+                    </article>
+                </div>
 
-            <a
-
-            href="https://ipalinks.ru/wh/grCqCu"
-
-            target="_blank"
-
-            class="download">
-
-            تحميل
-
-            </a>
-
-        </div>
-
-        <div class="card">
-
-            <div class="icon">
-                🤖
+                <!-- روابط التواصل الاجتماعي -->
+                <div class="social-section">
+                    <p class="social-label">انضم إلى مجتمعنا</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/5TmtrnRgJd" target="_blank" rel="noopener noreferrer" class="social-link glass-pill" aria-label="Discord">
+                            <i class="fa-brands fa-discord"></i>
+                            <span>Discord</span>
+                        </a>
+                        <a href="https://www.youtube.com/@KRB.A" target="_blank" rel="noopener noreferrer" class="social-link glass-pill" aria-label="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                            <span>YouTube</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@dcf_q" target="_blank" rel="noopener noreferrer" class="social-link glass-pill" aria-label="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </section>
+    </main>
 
-            <h3>
-
-                Android
-
-            </h3>
-
-            <p>
-
-                Roblox APK
-
-            </p>
-
-            <a
-
-            href="https://www.mediafire.com/file/g651xwz8mkzr70i/Delta-KRB.apk/file"
-
-            target="_blank"
-
-            class="download">
-
-            تحميل
-
-            </a>
-
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 KRB. جميع الحقوق محفوظة.</p>
+            <p class="footer-tagline">صُنع بحب في عالم Roblox</p>
         </div>
+    </footer>
 
-        <div class="card">
-
-            <div class="icon">
-
-                💻
-
-            </div>
-
-            <h3>
-
-                Windows
-
-            </h3>
-
-            <p>
-
-                EXE (قريباً)
-
-            </p>
-
-            <a
-
-            href="https://www.mediafire.com/file/ljm28f6dcwzklc6/Xeno_by_KRB.zip/file"
-
-            target="_blank"
-
-            class="download">
-
-            تحميل
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-<section id="community" class="community">
-
-    <h2>
-
-        انضم إلى مجتمع KRB
-
-    </h2>
-
-    <div class="socials">
-
-        <a
-
-        href="https://discord.gg/5TmtrnRgJd"
-
-        target="_blank">
-
-        Discord
-
-        </a>
-
-        <a
-
-        href="https://www.youtube.com/@KRB.A"
-
-        target="_blank">
-
-        YouTube
-
-        </a>
-
-        <a
-
-        href="https://www.tiktok.com/@dcf_q"
-
-        target="_blank">
-
-        TikTok
-
-        </a>
-
-    </div>
-
-</section>
-
-<footer id="footer">
-
-    © 2026 KRB — جميع الحقوق محفوظة
-
-</footer>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
