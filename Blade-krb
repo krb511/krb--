@@ -1,0 +1,195 @@
+-- // KRB AI - CORRECT VERSION (ONLY PARRY WHEN BALL IS TARGETING ME)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local Workspace = game:GetService("Workspace")
+local StarterGui = game:GetService("StarterGui")
+
+local Player = Players.LocalPlayer
+
+-- ===============================
+-- Variables
+-- ===============================
+local lastParry = 0
+local parryCooldown = 0.12
+local parryCount = 0
+local hasParried = false
+local currentBallId = nil
+
+-- ===============================
+-- 🔥最重要的函数: 只拿 targeting 我的球
+-- ===============================
+local function getBallTargetingMe()
+    local balls = Workspace:FindFirstChild("Balls")
+    if not balls then return nil end
+    
+    for _, ball in pairs(balls:GetChildren()) do
+        if ball:IsA("BasePart") and ball:GetAttribute("realBall") == true then
+            local target = ball:GetAttribute("target")
+            -- فقط الكرة الي تستهدفني انا شخصياً
+            if target == Player.Name then
+                return ball
+            end
+        end
+    end
+    return nil
+end
+
+-- ===============================
+-- Get ball velocity
+-- ===============================
+local function getBallVelocity(ball)
+    if not ball then return 0 end
+    if ball:FindFirstChild("zoomies") and ball.zoomies:FindFirstChild("VectorVelocity") then
+        return ball.zoomies.VectorVelocity.Magnitude
+    end
+    return ball.Velocity.Magnitude
+end
+
+-- ===============================
+-- 🔥 Parry once per ball
+-- ===============================
+local function doParry()
+    local now = tick()
+    if now - lastParry < parryCooldown then return false end
+    if hasParried then return false end
+    
+    VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+    task.wait(0.008)
+    VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+    
+    lastParry = now
+    parryCount = parryCount + 1
+    hasParried = true
+    
+    print("🔥 PARRY #" .. parryCount)
+    
+    return true
+end
+
+-- ===============================
+-- Simple GUI
+-- ===============================
+local function createGUI()
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "KRB_AI_GUI"
+    ScreenGui.Parent = Player:WaitForChild("PlayerGui")
+    ScreenGui.ResetOnSpawn = false
+    
+    local Frame = Instance.new("Frame")
+    Frame.Size = UDim2.new(0, 180, 0, 80)
+    Frame.Position = UDim2.new(0.01, 0, 0.01, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BackgroundTransparency = 0.5
+    Frame.Parent = ScreenGui
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0.08, 0)
+    
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1, -10, 0, 22)
+    title.Position = UDim2.new(0, 5, 0, 2)
+    title.BackgroundTransparency = 1
+    title.Text = "🎯 KRB AI"
+    title.TextColor3 = Color3.fromRGB(0, 255, 255)
+    title.TextSize = 12
+    title.Font = Enum.Font.GothamBold
+    title.Parent = Frame
+    
+    local parryLabel = Instance.new("TextLabel")
+    parryLabel.Size = UDim2.new(1, -10, 0, 18)
+    parryLabel.Position = UDim2.new(0, 5, 0, 28)
+    parryLabel.BackgroundTransparency = 1
+    parryLabel.Text = "🤺 Parries: 0"
+    parryLabel.TextColor3 = Color3.fromRGB(255, 200, 0)
+    parryLabel.TextSize = 11
+    parryLabel.Font = Enum.Font.Gotham
+    parryLabel.TextXAlignment = Enum.TextXAlignment.Left
+    parryLabel.Parent = Frame
+    
+    local statusLabel = Instance.new("TextLabel")
+    statusLabel.Size = UDim2.new(1, -10, 0, 18)
+    statusLabel.Position = UDim2.new(0, 5, 0, 48)
+    statusLabel.BackgroundTransparency = 1
+    statusLabel.Text = "🎯 Status: Waiting"
+    statusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    statusLabel.TextSize = 11
+    statusLabel.Font = Enum.Font.Gotham
+    statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+    statusLabel.Parent = Frame
+    
+    return {parryLabel = parryLabel, statusLabel = statusLabel}
+end
+
+-- ===============================
+-- Reset when new ball spawns
+-- ===============================
+local function resetParryState()
+    hasParried = false
+end
+
+if Workspace:FindFirstChild("Balls") then
+    Workspace.Balls.ChildAdded:Connect(function()
+        task.wait(0.05)
+        resetParryState()
+    end)
+end
+
+-- ===============================
+-- Main loop
+-- ===============================
+local gui = createGUI()
+
+RunService.PreSimulation:Connect(function()
+    local character = Player.Character
+    if not character or not character:FindFirstChild("HumanoidRootPart") then
+        return
+    end
+    
+    -- 🔥 فقط الكرة الي تستهدفني
+    local ball = getBallTargetingMe()
+    
+    if not ball then
+        gui.statusLabel.Text = "🎯 Status: No ball targeting me"
+        gui.statusLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+        return
+    end
+    
+    local myPos = character.HumanoidRootPart.Position
+    local ballPos = ball.Position
+    local distance = (myPos - ballPos).Magnitude
+    local velocity = getBallVelocity(ball)
+    
+    if velocity < 25 then return end
+    
+    local timeToImpact = distance / (velocity + 8)
+    
+    -- Update GUI
+    gui.parryLabel.Text = "🤺 Parries: " .. parryCount
+    
+    if timeToImpact < 0.45 and timeToImpact > 0.04 then
+        gui.statusLabel.Text = "🎯 Status: PARRYING!"
+        gui.statusLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+        doParry()
+    else
+        gui.statusLabel.Text = string.format("🎯 Status: Ball in %.0fms", timeToImpact * 1000)
+        gui.statusLabel.TextColor3 = Color3.fromRGB(255, 165, 0)
+    end
+end)
+
+-- ===============================
+-- Start
+-- ===============================
+pcall(function()
+    StarterGui:SetCore("SendNotification", {
+        Title = "🎯 KRB AI",
+        Text = "Only parries when ball targets YOU",
+        Duration = 3
+    })
+end)
+
+print("=" .. string.rep("=", 50))
+print("🎯 KRB AI - CORRECT VERSION")
+print("✅ ONLY parries when ball targets me")
+print("✅ One parry per ball")
+print("✅ No random parries")
+print("=" .. string.rep("=", 50))
